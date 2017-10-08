@@ -59,20 +59,22 @@ getUserIdFromLink = (link, cb) => {
     var username = str.substring(0, str.indexOf('?') || str.length - 1);
     request('https://mbasic.facebook.com/' + username, "", "GET", (http) => {
       if (http.status == 200 && http.readyState == 4) {
-        id = /thread\/\d{9,15}/.exec(http.responseText).toString().substr(7, 15);
+        id = /thread\/\d{9,15}/.exec(http.responseText);
+        if (id) id = id.toString().substr(7, 15);
+        else return cb(undefined);
         return cb(id);
       }
     });
   }
 }
 
-removeUser = (link) => {
+removeUser = (link, ban_user = 0) => {
   getUserIdFromLink(link, (id) => {
-    let removeAPI = 'https://www.facebook.com/ajax/groups/members/remove.php?group_id=677222392439615&uid=' + id + '&is_undo=0&source=profile_browser&dpr=1';
+    let removeAPI = 'https://www.facebook.com/ajax/groups/members/remove.php?group_id=331173057317904&uid=' + id + '&is_undo=0&source=profile_browser&dpr=1';
     var uid = document.cookie.match(/c_user=(\d+)/)[1]; 
     var dtsg = document.getElementsByName("fb_dtsg")[0].value;
-    var params ='fb_dtsg=' + dtsg + '&confirm=true&__user=' + uid;
-    if (id == uid) {
+    var params = `fb_dtsg=${dtsg}&confirm=true&ban_user=${ban_user}&__user=${uid}`;
+    if (!id || id == uid) {
       alert('Đừng tự xóa bản thân chứ =))');
       return;
     }
@@ -93,6 +95,7 @@ chrome.extension.onMessage.addListener((message, sender, callback) => {
     switch (message.functiontoInvoke) {
       case "comment": comment(); break;
       case "removeUser": removeUser(message.link); break;
+      case "removeAndBanUser": removeUser(message.link, 1); break;
     }
   }
 });
