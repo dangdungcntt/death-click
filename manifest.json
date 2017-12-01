@@ -13,11 +13,14 @@
     "128": "images/128icon.png"
   },
   "permissions": [
+    "webRequest",
     "tabs",
     "contextMenus",
     "http://*/*",
     "https://*/*",
-    "storage"
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
   ],
   "background": {
     "scripts": [
@@ -32,6 +35,8 @@
         "https://*/*"
       ],
       "js": [
+        "js/jquery.min.js",
+        "js/clipboard-polyfill.js",
         "js/script.js"
       ]
     }
