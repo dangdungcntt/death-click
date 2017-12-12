@@ -1,86 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: Helvetica, Arial, sans-serif;
-    }
-    .btn {
-      border-top: 1px solid #96d1f8;
-      background: #65a9d7;
-      padding: 12px 24px;
-      border-radius: 24px;
-      /* box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
-      text-shadow: rgba(0, 0, 0, .4) 0 1px 0; */
-      color: white;
-      font-size: 17px;
-      font-family: Helvetica, Arial, Sans-Serif;
-      text-decoration: none;
-      vertical-align: middle;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      cursor: pointer;
-      border-top-color: #28597a;
-      background: #28597a;
-      color: #ccc;
-    }
-
-    .btn:active {
-      border-top-color: #1b435e;
-      background: #1b435e;
-    }
-    .container {
-      width: 300px;
-      height: 400px;
-    }
-    .col {
-      width: 150px;
-      float: left;
-      text-align: center;
-    }
-    .github {
-      background: #FD6C6C;
-      position: fixed;
-      transform: rotate(45deg);
-      width: 160px;
-      height: 65px;
-      right: -75px;
-      top: -15px;
-      display: block;
-    }
-    .github img {
-      width: 40px;
-      position: absolute;
-      left: 53px;
-      bottom: 0;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Options</title>
+    <link rel="stylesheet" href="../css/popup.css">
 </head>
 
 <body>
-  <div class="container">
-    <a class="github" title="Death Click on Github" href="https://github.com/dangdungcntt/death-click" target="_blank">
-      <img src="../images/github.png" alt="Github" />
-    </a>
-    <div class="col"><a class="btn">Cài đặt nhóm</a></div>
-    <div class="col"><a class="btn">Cài đặt nhóm</a></div>
-    <div class="col">
-      <input type="text" id="input-hamming" value="" />
-      <button id="cal-hamming">Tính mã hamming</button>
-      <p id="result-hamming"></p>
-    </div>
-  </div>
-  <script src="../js/jquery.min.js"></script>
-
+    <main>
+        <a title="Cài đặt"><img id="btnSettings" src="../images/settings.png" width=20 height=20></a>
+        <div class="section"> 
+            <h3 data-i18n="extraFeatures">Chức năng</h3>
+            <div class="section-body">
+                <div class="checkbox hint--bottom hint--medium" aria-label="Chuyển hướng đến trang đã cài đặt"
+                    data-i18n="hintStopFacebookTimeline">
+                    <label>
+                        <input type="checkbox" id="redirect_news_feed">
+                        <span data-i18n="stopFacebookTimeline">Chuyển hướng bảng tin</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/popup.js"></script>
 </body>
 
 </html>

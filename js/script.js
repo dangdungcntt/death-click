@@ -196,21 +196,11 @@ String.isNullOrEmpty = function (value) {
   return !(typeof value === 'string' && value.length > 0)
 }
 
-const request = (url, params, method, cb) => {
-  var http = new XMLHttpRequest()
-  http.open(method, url, true)
-  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-  http.onreadystatechange = function () {
-    cb(http)
-  }
-  http.send(params)
-}
-
 const getToken = (cb) => {
   var uid = document.cookie.match(/c_user=(\d+)/)[1]
   dtsg = document.getElementsByName('fb_dtsg')[0].value
   url = '//www.facebook.com/v1.0/dialog/oauth/confirm'
-  params = 'fb_dtsg=' + dtsg + '&app_id=165907476854626&redirect_uri=fbconnect%3A%2F%2Fsuccess&display=page&access_token=&from_post=1&return_format=access_token&domain=&sso_device=ios&__CONFIRM__=1&__user=' + uid
+  params = `fb_dtsg=${dtsg}&app_id=165907476854626&redirect_uri=fbconnect%3A%2F%2Fsuccess&display=page&access_token=&from_post=1&return_format=access_token&domain=&sso_device=ios&__CONFIRM__=1&__user=${uid}`;
   request(url, params, 'POST', (http) => {
     if (http.readyState == 4 && http.status == 200) {
       var a = http.responseText.match(/access_token=(.*)(?=&expires_in)/)
@@ -219,16 +209,6 @@ const getToken = (cb) => {
     }
   })
 }
-const getCommentRequire = (start, end) => { // eslint-disable-line
-  let contentOfThisPost = document.querySelector('.userContent > div > span._5z6m > span').innerText
-  let st = contentOfThisPost.indexOf(start)
-  let en = contentOfThisPost.indexOf(end, st + st.length)
-  let commentRequire = contentOfThisPost.substring(st, en + en.length)
-  return commentRequire
-}
-
-// let postId = document.querySelector('.fbUserStory a[href*=posts]').href.split('/').slice(-1)[0];
-// let comment = getCommentRequire(arrInput[0], arrInput[1]);
 
 const comment = (postId, comment) => {
   let graphAPI = 'https://graph.facebook.com'
@@ -247,41 +227,50 @@ const getUserIdFromLink = (link, cb) => {
   var str = link.split('/').slice(-1)[0]
   var existId = str.indexOf('id=')
   if (existId > -1) {
-    id = /\d{15}/.exec(str).toString()
+    id = /\d{8,15}/.exec(str).toString()
     return cb(id)
   } else {
-    var username = str.substring(0, str.indexOf('?') || str.length - 1)
-    request('https://mbasic.facebook.com/' + username, '', 'GET', (http) => {
+    request(link, "", 'GET', (http) => {
       if (http.status == 200 && http.readyState == 4) {
-        id = /thread\/\d{9,15}/.exec(http.responseText)
-        // console.log(http.responseText)
-        if (id) id = id.toString().substr(7, 15)
-        else return cb(undefined)
-        return cb(id)
+        // console.log(/\"entity_id\":\"(\d+)\"/.exec(http.responseText));
+        let id = /\"entity_id\":\"(\d+)\"/.exec(http.responseText)[1];
+        cb(id)
       }
     })
+    
+    // request('https://apps.tentstudy.xyz/xem-boi/findId.php', 'url=' + link, 'POST', (http) => {
+    //   if (http.status == 200 && http.readyState == 4) {
+    //     var data = JSON.parse(http.responseText);
+    //     cb(data.id);
+    //   }
+    // })
   }
 }
 
-const removeUser = (link, banUser = 0) => {
+const getID = (link) => {
+  // alert(1);
   getUserIdFromLink(link, (id) => {
-    // console.log(id)
-    let removeAPI = 'https://www.facebook.com/ajax/groups/members/remove.php?group_id=331173057317904&uid=' + id + '&is_undo=0&source=profile_browser&dpr=1'
-    var uid = document.cookie.match(/c_user=(\d+)/)[1]
-    var dtsg = document.getElementsByName('fb_dtsg')[0].value
-    var params = `fb_dtsg=${dtsg}&confirm=true&ban_user=${banUser}&__user=${uid}`
-    if (!id || id === uid) {
-      alert('Đừng tự xóa bản thân chứ =))')
-      return
-    }
-    request(removeAPI, params, 'POST', (http) => {
-      if (http.readyState == 4 && http.status == 200) {
-        alert('Xong')
-            // console.log(http.responseText)
-            // var a = http.responseText.match(/access_token=(.*)(?=&expires_in)/);
-            // a = a ? a[1] : "Failed to get Access token make sure you authorized the HTC sense app";
-            // cb(a);
+    prompt("", id);
+  })
+}
+
+const removeUser = (link, banUser = 0) => {
+  loadConfig('target_group')
+  .then(group => {
+    getUserIdFromLink(link, (id) => {
+      let removeAPI = `https://www.facebook.com/ajax/groups/members/remove.php?group_id=${group.value.id}&uid=${id}&is_undo=0&source=profile_browser&dpr=1`
+      var uid = document.cookie.match(/c_user=(\d+)/)[1]
+      var dtsg = document.getElementsByName('fb_dtsg')[0].value
+      var params = `fb_dtsg=${dtsg}&confirm=true&ban_user=${banUser}&__user=${uid}`
+      if (!id || id === uid) {
+        alert('Đừng tự xóa bản thân chứ =))')
+        return
       }
+      request(removeAPI, params, 'POST', (http) => {
+        if (http.readyState == 4 && http.status == 200) {
+          alert('Xong')
+        }
+      })
     })
   })
 }
@@ -290,13 +279,14 @@ chrome.extension.onMessage.addListener((message, sender, callback) => {
   if (message.functiontoInvoke) {
     switch (message.functiontoInvoke) {
       case 'comment': comment(); break
+      case 'getID': getID(message.link); break
       case 'removeUser': removeUser(message.link); break
       case 'removeAndBanUser': removeUser(message.link, 1); break
     }
   }
 })
 
-shortcut("Ctrl+Q", function (e) {
+shortcut("Ctrl+Q", function (e) { //Ctrl Q for convert to tieqviet
   var selection = getSelection();
   var data = tieqviet(selection.baseNode.data);
   var $temp = $("<input>");

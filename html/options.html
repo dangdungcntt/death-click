@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cài đặt - Death Click</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/toastr.min.css">
+  <link rel="stylesheet" href="../css/options.css">
+</head>
+
+<body>
+  <div class="container" id="nghia_is_gay">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Cài đặt</h3>
+          </div>
+          <div class="panel-body">
+            <form>
+              <div class="form-group">
+                <label for="access_token">Access Token</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="access_token" placeholder="Access token" autofocus required autocomplete="off">
+                  <span class="input-group-btn">
+                    <a id="debug_access_token" class="btn btn-default" target="_blank">
+                      <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Debug</a>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Death Click cho nhóm</label>
+                <select id="target_group" class="form-control">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="post_id">Link điều hướng trang chủ</label>
+                <input type="url" id="redirect_news_feed_url" placeholder="https://www.facebook.com/messages/t/" class="form-control">
+              </div>
+              <div id="change_friends_avatar" class="form-group list-input">
+                <label for="">Đổi avatar bạn bè</label>
+                <!-- <input class="form-control" placeholder="Ex: 1000000000|ex.com/img.png"> -->
+                <!-- <div class="input-group">
+                  <div class="input-group-addon">
+                    <img src="https://www.colorcombos.com/images/colors/FF0080.png" alt="">
+                  </div>
+                  <input class="form-control" placeholder="Ex: 1000000000|ex.com/img.png">
+                  <div class="input-group-addon">
+                    <img src="https://www.colorcombos.com/images/colors/FF0080.png" alt="">
+                  </div>
+                </div> -->
+                <a id="btnAddFriend" class="btn btn-success btn-block">Add</a>
+              </div>
+              <a id="btnSave" class="btn btn-primary">Save</a>
+              <!-- <button type="reset" class="btn btn-danger">Reset</button> -->
+            </form>
+          </div>
+          <div class="panel-footer text-center">Developed by
+            <strong>
+              <a href="https://www.facebook.com/DangDungCNTT" target="_blank">Nguyễn Đăng Dũng</a>
+            </strong> - Copyright &copy; 2017
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/toastr.min.js"></script>
+  <script src="../js/functions.js"></script>
+  <script src="../js/options.js"></script>
+</body>
+
+</html>

@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "TentStudy",
+  "name": "DeathClick",
   "version": "1.0",
   "description": "Made by TentStudy",
   "browser_action": {
     "default_icon": "images/icon.png",
     "default_popup": "html/popup.html"
   },
+  "options_page": "html/options.html",
   "icons": {
     "16": "images/icon.png",
     "32": "images/icon.png",
@@ -14,6 +15,7 @@
   },
   "permissions": [
     "webRequest",
+    "webRequestBlocking",
     "tabs",
     "contextMenus",
     "http://*/*",
@@ -25,6 +27,7 @@
   "background": {
     "scripts": [
       "js/jquery.min.js",
+      "js/functions.js",
       "js/background.js"
     ]
   },
@@ -36,7 +39,7 @@
       ],
       "js": [
         "js/jquery.min.js",
-        "js/clipboard-polyfill.js",
+        "js/functions.js",
         "js/script.js"
       ]
     }
