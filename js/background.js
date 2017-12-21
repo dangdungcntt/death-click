@@ -96,13 +96,14 @@ chrome.contextMenus.create({
     setConfig('root', [
       'access_token', 'redirect_news_feed',
       'redirect_news_feed_url', 'target_group',
-      'change_friends_avatar'
+      'change_friends_avatar', 'translate_vi2vi'
     ])
     setConfig('access_token', '');
     setConfig('change_friends_avatar', []);
     setConfig('redirect_news_feed_url', 'https://www.facebook.com/messages/t/');
     setConfig('target_group', '');
     setConfig('redirect_news_feed', true);
+    setConfig('translate_vi2vi', true);
   }
 });
 

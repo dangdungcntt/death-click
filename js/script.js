@@ -286,7 +286,7 @@ chrome.extension.onMessage.addListener((message, sender, callback) => {
   }
 })
 
-shortcut("Ctrl+Q", function (e) { //Ctrl Q for convert to tieqviet
+shortcut("Ctrl+I", function (e) { //Ctrl I for convert to tieqviet
   var selection = getSelection();
   var data = tieqviet(selection.baseNode.data);
   var $temp = $("<input>");
@@ -304,4 +304,45 @@ shortcut("Ctrl+Q", function (e) { //Ctrl Q for convert to tieqviet
   setTimeout(() => {
     document.execCommand("Paste");
   }, 1);
+});
+
+shortcut("Ctrl+Q", async function (e) { //Ctrl Q for convert to Tieng Viet
+  // alert(1);
+  var transLocal = await loadConfig('translate_vi2vi');
+  var url = "https://dangdung-trans.herokuapp.com/vi2vi";
+  if (transLocal.value) {
+    url = "https://localhost:3000/vi2vi";
+  }
+  var selection = getSelection();
+  console.log(url)
+  $.ajax({
+    url,
+    method: "POST",
+    // crossDomain: true,
+    data: {
+      text: selection.baseNode.data
+    },
+    dataType: 'json'
+  })
+  .then(res => {
+    console.log(res);
+    var data = res.text;
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(data).select();
+    document.execCommand("copy");
+    $temp.remove();
+    $(e.target).focus();
+    selection = getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(e.target);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    // document.execCommand("Paste");
+    setTimeout(() => {
+      document.execCommand("Paste");
+    }, 1);
+  })
+  .catch(err => console.log(err))
+  
 });

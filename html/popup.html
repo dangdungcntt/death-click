@@ -2,31 +2,40 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Options</title>
-    <link rel="stylesheet" href="../css/popup.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Options</title>
+  <link rel="stylesheet" href="../css/popup.css">
 </head>
 
 <body>
-    <main>
-        <a title="Cài đặt"><img id="btnSettings" src="../images/settings.png" width=20 height=20></a>
-        <div class="section"> 
-            <h3 data-i18n="extraFeatures">Chức năng</h3>
-            <div class="section-body">
-                <div class="checkbox hint--bottom hint--medium" aria-label="Chuyển hướng đến trang đã cài đặt"
-                    data-i18n="hintStopFacebookTimeline">
-                    <label>
-                        <input type="checkbox" id="redirect_news_feed">
-                        <span data-i18n="stopFacebookTimeline">Chuyển hướng bảng tin</span>
-                    </label>
-                </div>
-            </div>
+  <main>
+    <a title="Cài đặt">
+      <img id="btnSettings" src="../images/settings.png" width=20 height=20>
+    </a>
+    <div class="section">
+      <h3 data-i18n="extraFeatures">Chức năng</h3>
+      <div class="section-body">
+        <div class="checkbox hint--bottom hint--medium" aria-label="Chuyển hướng đến trang đã cài đặt" data-i18n="hintStopFacebookTimeline">
+          <label>
+            <input type="checkbox" id="redirect_news_feed">
+            <span data-i18n="stopFacebookTimeline">Chuyển hướng bảng tin</span>
+          </label>
         </div>
-    </main>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/functions.js"></script>
-    <script src="../js/popup.js"></script>
+      </div>
+      <div class="section-body">
+        <div class="checkbox hint--bottom hint--medium" aria-label="API không dấu sang cọc dấu online" data-i18n="translate_vi2vi">
+          <label>
+            <input type="checkbox" id="translate_vi2vi">
+            <span data-i18n="translate_vi2vi">API dịch tiếng việt không dấu local</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/jquery.min.js"></script>
+  <script src="../js/functions.js"></script>
+  <script src="../js/popup.js"></script>
 </body>
 
 </html>
