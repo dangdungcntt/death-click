@@ -152,6 +152,14 @@ chrome.runtime.onMessage.addListener(
 
 let listReaction = [
   {
+    from: 'yIaFAbfUkOi.png',
+    to: 'https://i.imgur.com/ynOBYg3.png' //icon trên bình luận
+  },
+  {
+    from: 'vceWWODBKqx.png',
+    to: 'https://i.imgur.com/hkIKsbB.png' //icon trên bình luận
+  },
+  {
     from: 'F8o05Pwe0vn.png',
     to: 'https://i.imgur.com/SQxnviZ.png' //icon trên bình luận
   },
