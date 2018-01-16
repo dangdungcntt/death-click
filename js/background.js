@@ -5,7 +5,7 @@ const updateConfig = key => {
       .then(obj => {
         config[obj.key] = [];
         obj.value.forEach(friend => {
-          console.log(friend);
+          // console.log(friend);
           var xhr = new XMLHttpRequest();
           xhr.open('GET', `https://graph.facebook.com/${friend.id}/picture?type=large&redirect=true&width=40&height=40`, true);
 
@@ -14,7 +14,6 @@ const updateConfig = key => {
               let res = /\d{1,30}_\d{1,30}_\d{1,30}/.exec(xhr.responseURL);
               if (res) {
                 config[obj.key].push({ avatar_id: res[0], avatar: friend.avatar });
-                console.log(config[obj.key]);
               }
             }
           };

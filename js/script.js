@@ -230,18 +230,24 @@ const getUserIdFromLink = (link, cb) => {
     id = /\d{8,15}/.exec(str).toString()
     return cb(id)
   } else {
-    request(link, "", 'GET', (http) => {
-      if (http.status == 200 && http.readyState == 4) {
-        // console.log(/\"entity_id\":\"(\d+)\"/.exec(http.responseText));
-        let id = /\"entity_id\":\"(\d+)\"/.exec(http.responseText)[1];
-        cb(id)
-      }
+    loadConfig('access_token')
+    .then(access_token => {
+      var str = link.split('/').slice(-1)[0]
+      var graph = `https://graph.facebook.com/${str}?fields=id&access_token=${access_token.value}`;
+      // alert(graph);
+      request(graph, "", 'GET', (http) => {
+        if (http.status == 200 && http.readyState == 4) {
+          res = JSON.parse(http.responseText);
+          cb(res.id);
+        }
+      })
     })
     
-    // request('https://apps.tentstudy.xyz/xem-boi/findId.php', 'url=' + link, 'POST', (http) => {
+    // request(link, "", 'GET', (http) => {
     //   if (http.status == 200 && http.readyState == 4) {
-    //     var data = JSON.parse(http.responseText);
-    //     cb(data.id);
+    //     // console.log(/\"entity_id\":\"(\d+)\"/.exec(http.responseText));
+    //     let id = /\"entity_id\":\"(\d+)\"/.exec(http.responseText)[1];
+    //     cb(id)
     //   }
     // })
   }
