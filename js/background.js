@@ -151,6 +151,10 @@ chrome.runtime.onMessage.addListener(
 
 let listReaction = [
   {
+    from: '/sound/tik.wav',
+    to: 'http://tentstudy.xyz/mp3/chat.mp3'
+  },
+  {
     from: 'yIaFAbfUkOi.png',
     to: 'https://i.imgur.com/ynOBYg3.png' //icon trên bình luận
   },

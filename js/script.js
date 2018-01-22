@@ -23,6 +23,7 @@ function shortcut(shortcut, callback, opt) {
     e = e || window.event;
 
     //Find Which key is pressed
+    var code
     if (e.keyCode) code = e.keyCode;
     else if (e.which) code = e.which;
     var character = String.fromCharCode(code).toLowerCase();
